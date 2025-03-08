@@ -2,13 +2,11 @@ magic-api:
   #配置web页面入口
   web: /magic/web
   resource:
-    #配置文件存储位置。当以classpath开头时，为只读模式
-    #mac用户请改为可读写的目录
-    #如果不想存到文件中，可以参考配置将接口信息存到数据库、Redis中（或自定义）
-    location: /Users/xllyll/work/home/magic-api
+    type: database
+    table-name: magic_api_file_v2
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/magic-api-test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: root
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.31.124:5432/yunlios?currentSchema=form&useSSL=false&socketTimeout=30000
+    username: yunlios
+    password: yunlios@0120
