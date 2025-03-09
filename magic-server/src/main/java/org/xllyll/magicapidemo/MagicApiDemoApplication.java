@@ -7,7 +7,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-
+/**
+ * 程序入口
+ */
 @SpringBootApplication
 public class MagicApiDemoApplication extends SpringBootServletInitializer {
 
