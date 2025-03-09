@@ -57,7 +57,6 @@ public class MagicWorkbenchController extends MagicController implements MagicEx
 
 	private String allClassTxt;
 
-
 	public MagicWorkbenchController(MagicConfiguration configuration, MagicAPIProperties properties, List<Plugin> plugins) {
 		super(configuration);
 		this.properties = properties;
