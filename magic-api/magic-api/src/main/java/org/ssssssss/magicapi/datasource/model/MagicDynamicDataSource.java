@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.ssssssss.magicapi.datasource.context.DynamicDataSourceContextHolder;
 import org.ssssssss.magicapi.modules.db.dialect.DialectAdapter;
 import org.ssssssss.magicapi.core.exception.MagicAPIException;
 import org.ssssssss.magicapi.modules.db.dialect.Dialect;
@@ -21,11 +23,18 @@ import java.util.*;
  *
  * @author mxd
  */
-public class MagicDynamicDataSource {
+public class MagicDynamicDataSource extends AbstractRoutingDataSource {
 
 	private static final Logger logger = LoggerFactory.getLogger(MagicDynamicDataSource.class);
 
 	private final Map<String, MagicDynamicDataSource.DataSourceNode> dataSourceMap = new HashMap<>();
+
+	private final Map<Object, Object> targetDataSources = new HashMap<>();
+
+	@Override
+	protected Object determineCurrentLookupKey() {
+		return DynamicDataSourceContextHolder.getDataSourceType();
+	}
 
 	/**
 	 * 注册默认数据源
@@ -69,6 +78,14 @@ public class MagicDynamicDataSource {
 		if (node != null) {
 			node.close();
 		}
+
+		// 同步到 targetDataSources
+		synchronized (this.targetDataSources) {
+			this.targetDataSources.put(dataSourceKey, dataSource);
+			super.setTargetDataSources(this.targetDataSources);
+			super.afterPropertiesSet(); // 刷新数据源映射
+		}
+
 		if (id != null) {
 			String finalDataSourceKey = dataSourceKey;
 			this.dataSourceMap.entrySet().stream()
@@ -112,6 +129,12 @@ public class MagicDynamicDataSource {
 			result = node != null;
 			if (result) {
 				node.close();
+				// 同步到 targetDataSources
+				synchronized (this.targetDataSources) {
+					this.targetDataSources.remove(datasourceKey);
+					super.setTargetDataSources(this.targetDataSources);
+					super.afterPropertiesSet(); // 刷新数据源映射
+				}
 			}
 		}
 		logger.info("删除数据源：{}:{}", datasourceKey, result ? "成功" : "失败");

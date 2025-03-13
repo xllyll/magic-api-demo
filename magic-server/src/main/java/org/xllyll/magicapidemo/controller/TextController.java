@@ -1,6 +1,5 @@
 package org.xllyll.magicapidemo.controller;
 
-import ch.qos.logback.core.db.dialect.DBUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -8,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ssssssss.magicapi.datasource.model.MagicDynamicDataSource;
-import org.ssssssss.magicapi.modules.db.mybatis.MybatisParser;
 import org.xllyll.magicapidemo.mapper.SysConfigMapper;
 import org.xllyll.magicapidemo.model.SysConfig;
 
