@@ -87,7 +87,7 @@ import java.util.stream.Collectors;
 @Configuration
 @ConditionalOnClass({RequestMappingHandlerMapping.class})
 @EnableConfigurationProperties(MagicAPIProperties.class)
-@Import({MagicServletConfiguration.class, MagicJsonAutoConfiguration.class, ApplicationUriPrinter.class, MagicModuleConfiguration.class, MagicDynamicRegistryConfiguration.class})
+@Import({MagicServletConfiguration.class, MagicJsonAutoConfiguration.class, ApplicationUriPrinter.class, MagicDatasourceConfiguration.class,MagicModuleConfiguration.class, MagicDynamicRegistryConfiguration.class})
 @EnableWebSocket
 @AutoConfigureAfter(MagicPluginConfiguration.class)
 public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketConfigurer {

@@ -2,11 +2,10 @@ package org.ssssssss.magicapi.datasource.context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.ssssssss.magicapi.datasource.model.MagicDynamicDataSource;
 
 /**
  * 数据源切换处理
- * 
- * @author xllyll
  */
 public class DynamicDataSourceContextHolder
 {

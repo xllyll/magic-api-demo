@@ -1,6 +1,11 @@
 package org.xllyll.magicapidemo.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("sys_config")
 public class SysConfig {
+    @TableId
     private Integer configId;
     private String configName;
     private String configKey;

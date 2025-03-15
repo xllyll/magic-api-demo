@@ -42,7 +42,7 @@ public class ApplicationUriPrinter implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("*****************************************************************************************************");
+		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("********************************************当前服务相关地址********************************************");
 		String ip = "IP";
 		try {
@@ -67,6 +67,5 @@ public class ApplicationUriPrinter implements CommandLineRunner {
 		}
 		System.out.println("\t可通过配置关闭输出: \tmagic-api.show-url=false");
 		System.out.println("********************************************当前服务相关地址********************************************");
-		System.out.println("*****************************************************************************************************");
 	}
 }

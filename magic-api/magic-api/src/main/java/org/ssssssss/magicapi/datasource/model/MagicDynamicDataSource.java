@@ -23,7 +23,7 @@ import java.util.*;
  *
  * @author mxd
  */
-public class MagicDynamicDataSource extends AbstractRoutingDataSource {
+public class MagicDynamicDataSource extends AbstractRoutingDataSource{
 
 	private static final Logger logger = LoggerFactory.getLogger(MagicDynamicDataSource.class);
 
@@ -31,11 +31,18 @@ public class MagicDynamicDataSource extends AbstractRoutingDataSource {
 
 	private final Map<Object, Object> targetDataSources = new HashMap<>();
 
-	@Override
-	protected Object determineCurrentLookupKey() {
-		return DynamicDataSourceContextHolder.getDataSourceType();
+	public MagicDynamicDataSource(DataSource defaultTargetDataSource) {
+		super.setDefaultTargetDataSource(defaultTargetDataSource);
+		super.setTargetDataSources(targetDataSources);
+		super.afterPropertiesSet();
 	}
 
+	@Override
+	protected Object determineCurrentLookupKey() {
+		String dataSourceKey = DynamicDataSourceContextHolder.getDataSourceType();
+		logger.info("Determined data source key: {}", dataSourceKey);
+		return dataSourceKey;
+	}
 	/**
 	 * 注册默认数据源
 	 */
@@ -78,14 +85,12 @@ public class MagicDynamicDataSource extends AbstractRoutingDataSource {
 		if (node != null) {
 			node.close();
 		}
-
 		// 同步到 targetDataSources
 		synchronized (this.targetDataSources) {
 			this.targetDataSources.put(dataSourceKey, dataSource);
 			super.setTargetDataSources(this.targetDataSources);
 			super.afterPropertiesSet(); // 刷新数据源映射
 		}
-
 		if (id != null) {
 			String finalDataSourceKey = dataSourceKey;
 			this.dataSourceMap.entrySet().stream()

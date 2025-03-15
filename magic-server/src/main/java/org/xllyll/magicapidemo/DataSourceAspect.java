@@ -1,24 +1,23 @@
-package org.ssssssss.magicapi.datasource.aspectj;
+package org.xllyll.magicapidemo;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.ssssssss.magicapi.datasource.annotation.TargetDataSource;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.ssssssss.magicapi.datasource.context.DynamicDataSourceContextHolder;
+import org.xllyll.magicapidemo.annotation.TargetDataSource;
 
 import java.util.Objects;
 
 /**
  * 多数据源处理
- * 
- * @author xllyll
  */
 @Aspect
 @Order(1)
@@ -27,8 +26,8 @@ public class DataSourceAspect
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(org.ssssssss.magicapi.datasource.annotation.TargetDataSource)"
-            + "|| @within(org.ssssssss.magicapi.datasource.annotation.TargetDataSource)")
+    @Pointcut("@annotation(org.xllyll.magicapidemo.annotation.TargetDataSource)"
+            + "|| @within(org.xllyll.magicapidemo.annotation.TargetDataSource)")
     public void dsPointCut()
     {
 
@@ -39,7 +38,7 @@ public class DataSourceAspect
     {
         TargetDataSource dataSource = getDataSource(point);
 
-        if (dataSource!=null)
+        if (dataSource != null)
         {
             DynamicDataSourceContextHolder.setDataSourceType(dataSource.value());
         }
